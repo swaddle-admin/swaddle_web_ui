@@ -55,3 +55,24 @@ export const NAVBAR = {
   actionIconSize: "lg",
   gap: "xs",
 };
+
+export const EMPTY_STATE = {
+  logoSize: 120,
+  title: "Start a conversation",
+  subtitle: "Ask a question, share something or explore a topic.",
+  titleSize: "xl",
+  subtitleSize: "sm",
+  textGap: "4px",
+};
+
+export const INPUT = {
+  borderRadius: "32px",
+  padding: "8px 8px 8px 16px",
+  boxShadow: "0 4px 24px rgba(0,0,0,0.1)",
+  iconSize: "lg",
+  iconWidth: 24,
+  buttonRadius: "24px",
+  buttonSize: "lg",
+  placeholder: "Talk to Swaddle",
+  sendLabel: "Send",
+};

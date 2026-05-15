@@ -1,6 +1,8 @@
 import { Box, Stack } from "@mantine/core";
 import { GRADIENTS, SPACING, LAYOUT } from "../utils/constants";
 import Navbar from "../components/layout/Navbar";
+import EmptyState from "../components/chat/EmptyState";
+import MessageInput from "../components/chat/MessageInput";
 
 const ChatPage = () => {
   return (
@@ -13,14 +15,10 @@ const ChatPage = () => {
       }}
     >
       <Navbar />
-      <Stack
-        h={LAYOUT.fullHeight}
-        justify="space-between"
-        p={SPACING.pagePadding}
-      >
-        <div>Chat area goes here</div>
-        <div>Input goes here</div>
+      <Stack h={LAYOUT.fullHeight} justify="center" p={SPACING.pagePadding}>
+        <EmptyState />
       </Stack>
+      <MessageInput />
     </Box>
   );
 };
