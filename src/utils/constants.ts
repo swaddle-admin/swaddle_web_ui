@@ -40,3 +40,18 @@ export const ANIMATION = {
     in: [0.4, 0.0, 1, 1],
   },
 };
+
+export const NAVBAR = {
+  backdropFilter: "blur(10px)",
+  backgroundColor: "rgba(255,255,255,0.1)",
+  borderBottom: "2px solid rgba(255,255,255,0.4)",
+  paddingX: "xl",
+  fontWeight: 700,
+  fontSize: "lg",
+  title: "🧸 Swaddle",
+  logoHeight: 40,
+  wordmarkHeight: 30,
+  iconSize: 20,
+  actionIconSize: "lg",
+  gap: "xs",
+};

@@ -1,17 +1,23 @@
 import { Box, Stack } from "@mantine/core";
+import { GRADIENTS, SPACING, LAYOUT } from "../utils/constants";
+import Navbar from "../components/layout/Navbar";
 
 const ChatPage = () => {
   return (
     <Box
       style={{
-        minHeight: "100vh",
-        background:
-          "linear-gradient(135deg, #a8c0e8 0%, #9b8ec4 50%, #8b7bb8 100%)",
+        minHeight: LAYOUT.fullHeight,
+        background: GRADIENTS.background,
         display: "flex",
         flexDirection: "column",
       }}
     >
-      <Stack h="100vh" justify="space-between" p="md">
+      <Navbar />
+      <Stack
+        h={LAYOUT.fullHeight}
+        justify="space-between"
+        p={SPACING.pagePadding}
+      >
         <div>Chat area goes here</div>
         <div>Input goes here</div>
       </Stack>

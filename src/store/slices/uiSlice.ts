@@ -1,5 +1,4 @@
-import type { PayloadAction } from "@reduxjs/toolkit/react";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { UIState } from "../../types";
 
 const initialState: UIState = {
