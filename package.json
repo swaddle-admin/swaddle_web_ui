@@ -8,6 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format": "npx prettier --write 'src/**/*.{ts,tsx}'",
+    "test": "vitest --config '{\"test\":{\"globals\":true,\"environment\":\"jsdom\",\"setupFiles\":\"./src/tests/setup.ts\"}}'",
+    "test:run": "vitest run",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -39,6 +41,7 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
     "globals": "^17.6.0",
+    "jsdom": "^27.0.1",
     "msw": "^2.14.6",
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.59.2",
