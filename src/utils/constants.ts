@@ -36,8 +36,8 @@ export const ANIMATION = {
     slow: 0.4,
   },
   ease: {
-    out: [0.0, 0.0, 0.2, 1],
-    in: [0.4, 0.0, 1, 1],
+    out: "easeOut",
+    in: "easeIn",
   },
 };
 

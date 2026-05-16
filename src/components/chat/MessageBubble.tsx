@@ -1,5 +1,6 @@
 import { Box, Text } from "@mantine/core";
-import { COLORS, BUBBLE } from "../../utils/constants";
+import { motion } from "framer-motion";
+import { COLORS, BUBBLE, ANIMATION } from "../../utils/constants";
 import type { Message } from "../../types";
 
 interface MessageBubbleProps {
@@ -11,6 +12,13 @@ const MessageBubble = ({ message }: MessageBubbleProps) => {
 
   return (
     <Box
+      component={motion.div}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{
+        duration: ANIMATION.duration.normal,
+        ease: [0.0, 0.0, 0.2, 1] as const,
+      }}
       style={{
         display: "flex",
         justifyContent: isUser ? "flex-end" : "flex-start",
