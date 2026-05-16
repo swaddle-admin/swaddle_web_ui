@@ -1,11 +1,13 @@
 import { Box } from "@mantine/core";
 import MessageBubble from "./MessageBubble";
 import EmptyState from "./EmptyState";
+import TypingIndicator from "./TypingIndicator";
 import { LAYOUT } from "../../utils/constants";
 import useAppSelector from "../../hooks/useAppSelector";
 
 const MessageList = () => {
   const messages = useAppSelector((state) => state.chat.messages);
+  const isLoading = useAppSelector((state) => state.chat.isLoading);
   const isEmpty = messages.length === 0;
 
   return (
@@ -17,12 +19,15 @@ const MessageList = () => {
         paddingTop: "16px",
       }}
     >
-      {isEmpty ? (
+      {isEmpty && !isLoading ? (
         <EmptyState />
       ) : (
-        messages.map((message) => (
-          <MessageBubble key={message.id} message={message} />
-        ))
+        <>
+          {messages.map((message) => (
+            <MessageBubble key={message.id} message={message} />
+          ))}
+          {isLoading && <TypingIndicator />}
+        </>
       )}
     </Box>
   );

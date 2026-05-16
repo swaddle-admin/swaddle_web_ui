@@ -2,6 +2,7 @@ export const GRADIENTS = {
   light: "linear-gradient(135deg, #a8c0e8 0%, #9b8ec4 50%, #8b7bb8 100%)",
   dark: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
 };
+
 export const COLORS = {
   primary: "#7950f2",
   primaryLight: "#9775fa",

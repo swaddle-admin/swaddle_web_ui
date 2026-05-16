@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { addMessage } from "../store/slices/chatSlice";
+import { addMessage, setLoading } from "../store/slices/chatSlice";
 import useAppDispatch from "./useAppDispatch";
 import type { Message } from "../types";
 
@@ -19,6 +19,8 @@ const useMessageInput = () => {
     };
 
     dispatch(addMessage(message));
+    dispatch(setLoading(true));
+    setTimeout(() => dispatch(setLoading(false)), 3000);
     setValue("");
   };
 
