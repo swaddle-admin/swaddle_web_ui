@@ -1,26 +1,22 @@
-import { Box, Stack } from "@mantine/core";
-import { GRADIENTS, SPACING, LAYOUT } from "../utils/constants";
+import { Box } from "@mantine/core";
+import { GRADIENTS, LAYOUT } from "../utils/constants";
 import Navbar from "../components/layout/Navbar";
-import EmptyState from "../components/chat/EmptyState";
+import MessageList from "../components/chat/MessageList";
 import MessageInput from "../components/chat/MessageInput";
 
-const ChatPage = () => {
-  return (
-    <Box
-      style={{
-        minHeight: LAYOUT.fullHeight,
-        background: GRADIENTS.background,
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
-      <Navbar />
-      <Stack h={LAYOUT.fullHeight} justify="center" p={SPACING.pagePadding}>
-        <EmptyState />
-      </Stack>
-      <MessageInput />
-    </Box>
-  );
-};
+const ChatPage = () => (
+  <Box
+    style={{
+      minHeight: LAYOUT.fullHeight,
+      background: GRADIENTS.background,
+      display: "flex",
+      flexDirection: "column",
+    }}
+  >
+    <Navbar />
+    <MessageList />
+    <MessageInput />
+  </Box>
+);
 
 export default ChatPage;

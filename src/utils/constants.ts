@@ -76,3 +76,12 @@ export const INPUT = {
   placeholder: "Talk to Swaddle",
   sendLabel: "Send",
 };
+
+export const BUBBLE = {
+  maxWidth: "70%",
+  padding: "12px 16px",
+  gap: "8px",
+  fontSize: "sm",
+  radiusUser: "18px 18px 4px 18px",
+  radiusAi: "18px 18px 18px 4px",
+};
