@@ -23,6 +23,7 @@ const MessageList = () => {
         overflowY: "auto",
         paddingBottom: LAYOUT.inputHeight,
         paddingTop: "16px",
+        height: "100%",
       }}
     >
       {isEmpty && !isLoading ? (

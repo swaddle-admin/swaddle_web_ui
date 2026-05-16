@@ -6,12 +6,14 @@ export const containerStyle = {
   left: 0,
   right: 0,
   padding: "16px",
+  paddingBottom: "calc(16px + env(safe-area-inset-bottom))",
   display: "flex",
   justifyContent: "center",
 };
 
 export const inputBarStyle = {
-  width: LAYOUT.maxWidth,
+  width: "100%",
+  maxWidth: LAYOUT.maxWidth,
   backgroundColor: "white",
   borderRadius: INPUT.borderRadius,
   padding: INPUT.padding,

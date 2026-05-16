@@ -26,7 +26,7 @@ export const SPACING = {
 export const LAYOUT = {
   maxWidth: "768px",
   navbarHeight: "60px",
-  inputHeight: "56px",
+  inputHeight: "100px",
   fullHeight: "100vh",
 };
 
