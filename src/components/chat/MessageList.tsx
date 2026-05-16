@@ -1,4 +1,5 @@
 import { Box } from "@mantine/core";
+import { useEffect, useRef } from "react";
 import MessageBubble from "./MessageBubble";
 import EmptyState from "./EmptyState";
 import TypingIndicator from "./TypingIndicator";
@@ -9,6 +10,11 @@ const MessageList = () => {
   const messages = useAppSelector((state) => state.chat.messages);
   const isLoading = useAppSelector((state) => state.chat.isLoading);
   const isEmpty = messages.length === 0;
+  const bottomRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, isLoading]);
 
   return (
     <Box
@@ -29,6 +35,7 @@ const MessageList = () => {
           {isLoading && <TypingIndicator />}
         </>
       )}
+      <div ref={bottomRef} />
     </Box>
   );
 };
