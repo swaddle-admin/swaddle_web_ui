@@ -18,4 +18,11 @@ export const theme = createTheme({
       "#5f3dc4",
     ],
   },
+  components: {
+    ActionIcon: {
+      defaultProps: {
+        variant: "subtle",
+      },
+    },
+  },
 });
