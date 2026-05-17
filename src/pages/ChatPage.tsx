@@ -1,13 +1,12 @@
-import { Box } from "@mantine/core";
-import { motion } from "framer-motion";
-import { GRADIENTS, LAYOUT, ANIMATION } from "../utils/constants";
-import Navbar from "../components/layout/Navbar";
-import MessageList from "../components/chat/MessageList";
-import MessageInput from "../components/chat/MessageInput";
-import useAppSelector from "../hooks/useAppSelector";
+import { Box, Input } from '@mantine/core'
+import { motion } from 'framer-motion'
+import { GRADIENTS, LAYOUT, ANIMATION } from '../utils/constants'
+import Navbar from '../components/layout/Navbar'
+import useAppSelector from '../hooks/useAppSelector'
+import List from '../components/chat/message/List'
 
 const ChatPage = () => {
-  const isDarkMode = useAppSelector((state) => state.ui.isDarkMode);
+  const isDarkMode = useAppSelector((state) => state.ui.isDarkMode)
 
   return (
     <motion.div
@@ -16,22 +15,22 @@ const ChatPage = () => {
       }}
       transition={{
         duration: ANIMATION.duration.slow,
-        ease: "easeInOut",
+        ease: 'easeInOut',
       }}
       style={{
         height: LAYOUT.fullHeight,
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
       }}
     >
       <Navbar />
-      <Box style={{ flex: 1, overflow: "hidden", padding: "0 16px" }}>
-        <MessageList />
+      <Box style={{ flex: 1, overflow: 'hidden', padding: '0 16px' }}>
+        <List />
       </Box>
-      <MessageInput />
+      <Input />
     </motion.div>
-  );
-};
+  )
+}
 
-export default ChatPage;
+export default ChatPage
