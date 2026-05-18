@@ -16,8 +16,14 @@ const NavbarThemeToggle = () => {
   }
 
   return (
-    <ActionIcon variant="subtle" radius="xl" size="lg" onClick={handleToggle}>
-      <img src={isDark ? sunIcon : moonIcon} alt="Toggle theme" width={20} />
+    <ActionIcon
+      variant="subtle"
+      radius="xl"
+      size="xl"
+      onClick={handleToggle}
+      style={{ width: 44, height: 44 }}
+    >
+      <img src={isDark ? sunIcon : moonIcon} alt="Toggle theme" width={24} />
     </ActionIcon>
   )
 }
