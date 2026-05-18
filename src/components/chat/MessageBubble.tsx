@@ -19,7 +19,7 @@ const MessageBubble = ({ message, isStreaming }: MessageBubbleProps) => {
         <Text
           size="sm"
           c={isUser ? '#1a1a2e' : '#ffffff'}
-          style={{ lineHeight: 1.6 }}
+          style={{ lineHeight: 1.6, textAlign: 'left', wordWrap: 'break-word', overflowWrap: 'break-word' }}
         >
           {content}
           {isStreaming && <motion.span {...cursorAnimation}>▋</motion.span>}

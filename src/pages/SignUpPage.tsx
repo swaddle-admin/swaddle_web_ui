@@ -1,7 +1,9 @@
 import { Box, Stack, Text } from '@mantine/core'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../utils/firebase'
 import useAuth from '../hooks/useAuth'
 import { pageStyle, cardStyle } from '../components/auth/AuthPages.styles'
 import EmailInput from '../components/auth/EmailInput'
@@ -21,11 +23,18 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const { signUp, isLoading, error } = useAuth()
+  const [user, loading] = useAuthState(auth)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (!loading && user) {
+      navigate('/chat')
+    }
+  }, [loading, user, navigate])
+
   const handleSignUp = async () => {
-    await signUp(email, password)
-    if (!error) navigate('/chat')
+    const success = await signUp(email, password)
+    if (success) navigate('/chat')
   }
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>

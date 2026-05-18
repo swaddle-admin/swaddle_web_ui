@@ -32,7 +32,7 @@ const InputField = ({
   <TextInput
     placeholder="Talk to Swaddle"
     variant="unstyled"
-    style={{ flex: 1 }}
+    style={{ flex: 1, fontSize: '16px' }}
     value={value}
     onChange={(e) => onChange(e.currentTarget.value)}
     onKeyDown={onKeyDown}
