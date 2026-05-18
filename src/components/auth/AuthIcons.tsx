@@ -1,4 +1,4 @@
-import keyIcon from '../assets/key.svg'
+import keyIcon from '../../assets/key.svg'
 
 export const EmailIcon = () => (
   <span style={{ color: '#77B4D8', fontWeight: 700, fontSize: '21px' }}>@</span>
