@@ -3,7 +3,7 @@ import {
   pillStyle,
   iconWrapperStyle,
   pillInnerInputStyle,
-} from '../pages/AuthPages.styles'
+} from './AuthPages.styles'
 import type { ReactNode } from 'react'
 
 type PillInputProps = {
