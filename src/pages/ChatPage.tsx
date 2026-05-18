@@ -26,7 +26,7 @@ const ChatPage = () => {
 }
 
 const GRADIENTS = {
-  dark: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+  dark: 'linear-gradient(135deg, #230a3e 0%, #3d1762 50%, #5d1c7a 100%)',
   light: 'linear-gradient(135deg, #a8c0e8 0%, #9b8ec4 50%, #8b7bb8 100%)',
 }
 
