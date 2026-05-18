@@ -1,5 +1,5 @@
 import { Stack } from '@mantine/core'
-import logo from '../assets/logo.svg'
+import logo from '../../assets/logo.svg'
 
 const AuthHeader = () => (
   <Stack align="center" mb="xl">
