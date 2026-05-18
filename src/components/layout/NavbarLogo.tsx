@@ -1,11 +1,11 @@
-import { Group } from "@mantine/core";
-import { NAVBAR } from "../../utils/constants";
-import swaddleWordmark from "../../assets/swaddle-wordmark.svg";
+import { Group } from '@mantine/core'
+
+import swaddleWordmark from '../../assets/swaddle-wordmark.svg'
 
 const NavbarLogo = () => (
-  <Group align="center" gap={NAVBAR.gap}>
-    <img src={swaddleWordmark} alt="Swaddle" height={NAVBAR.wordmarkHeight} />
+  <Group align="center" gap="xs">
+    <img src={swaddleWordmark} alt="Swaddle" height={30} />
   </Group>
-);
+)
 
-export default NavbarLogo;
+export default NavbarLogo

@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from './testUtils'
 import type { Message } from '../types'
+import MessageBubble from '../components/chat/MessageBubble'
 
 const userMessage: Message = {
   id: '1',

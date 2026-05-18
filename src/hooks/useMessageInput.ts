@@ -6,65 +6,56 @@ import {
   updateMessage,
 } from '../store/slices/chatSlice'
 import { streamChat } from '../utils/chatApi'
-import useAppSelector from './useAppSelector'
 import useAppDispatch from './useAppDispatch'
 import type { Message } from '../types'
 
 const useMessageInput = () => {
   const dispatch = useAppDispatch()
   const [value, setValue] = useState('')
-  const user = useAppSelector((state) => state.chat) // ← was state.chat?.  (dangling dot)
+
+  const createMessage = (role: Message['role'], content: string): Message => ({
+    id: crypto.randomUUID(),
+    role,
+    content,
+    contentType: 'text',
+    timestamp: new Date(),
+  })
 
   const handleSend = async () => {
     if (!value.trim()) return
 
-    const userMessage: Message = {
-      id: crypto.randomUUID(),
-      role: 'user',
-      content: value.trim(),
-      contentType: 'text',
-      timestamp: new Date(),
-    }
+    const userMessage = createMessage('user', value.trim())
     dispatch(addMessage(userMessage))
     setValue('')
+
+    const aiMessage = createMessage('assistant', '')
+    dispatch(addMessage(aiMessage))
     dispatch(setLoading(true))
 
-    const aiMessageId = crypto.randomUUID()
     let aiContent = ''
 
-    const aiMessage: Message = {
-      id: aiMessageId,
-      role: 'assistant',
-      content: '',
-      contentType: 'text',
-      timestamp: new Date(),
-    }
-    dispatch(addMessage(aiMessage))
-
-    await streamChat(
-      userMessage.content,
-      'user_123',
-      (token) => {
+    await streamChat(userMessage.content, 'user_123', {
+      onToken: (token) => {
         aiContent += token
-        dispatch(updateMessage({ id: aiMessageId, content: aiContent }))
+        dispatch(updateMessage({ id: aiMessage.id, content: aiContent }))
       },
-      (intent, message) => {
+      onIntent: (_intent, message) => {
         dispatch(
           updateMessage({
-            id: aiMessageId,
+            id: aiMessage.id,
             content: message,
             contentType: 'card',
           })
         )
       },
-      () => {
+      onDone: () => {
         dispatch(setLoading(false))
       },
-      (error) => {
+      onError: (error) => {
         dispatch(setError(error))
         dispatch(setLoading(false))
-      }
-    )
+      },
+    })
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

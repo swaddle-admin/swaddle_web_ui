@@ -1,96 +1,18 @@
-export const GRADIENTS = {
-  light: 'linear-gradient(135deg, #a8c0e8 0%, #9b8ec4 50%, #8b7bb8 100%)',
-  dark: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+export const APP = {
+  name: 'Swaddle',
 }
 
-export const COLORS = {
-  primary: '#7950f2',
-  primaryLight: '#9775fa',
-  bubble: {
-    ai: '#7950f2',
-    user: '#ffffff',
+export const ANIMATIONS = {
+  // Logo bobbing animation - continuously moves the logo up and down in a smooth loop
+  logoAnimation: {
+    animate: { y: [0, -8, 0] },
+    transition: { duration: 3, repeat: Infinity, ease: 'easeInOut' },
   },
-  text: {
-    light: '#ffffff',
-    dark: '#1a1a2e',
-    muted: 'rgba(255,255,255,0.7)',
+
+  // Text fade-in animation - slides text content in from below while fading in on page load
+  textAnimation: {
+    initial: { opacity: 0, y: 10 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.25, delay: 0.2 },
   },
-}
-
-export const SPACING = {
-  pagePadding: 'md',
-  bubbleRadius: '18px',
-  inputRadius: '24px',
-}
-
-export const LAYOUT = {
-  maxWidth: '768px',
-  navbarHeight: '60px',
-  inputHeight: '100px',
-  fullHeight: '100vh',
-}
-
-export const ANIMATION = {
-  duration: {
-    fast: 0.15,
-    normal: 0.25,
-    slow: 0.4,
-  },
-  ease: {
-    out: 'easeOut',
-    in: 'easeIn',
-  },
-}
-
-export const NAVBAR = {
-  backdropFilter: 'blur(10px)',
-  backgroundColor: 'rgba(255,255,255,0.1)',
-  borderBottom: '2px solid rgba(255,255,255,0.4)',
-  paddingX: 'xl',
-  fontWeight: 700,
-  fontSize: 'lg',
-  title: '🧸 Swaddle',
-  logoHeight: 40,
-  wordmarkHeight: 30,
-  iconSize: 20,
-  actionIconSize: 'lg',
-  gap: 'xs',
-}
-
-export const EMPTY_STATE = {
-  logoSize: 120,
-  title: 'Start a conversation',
-  subtitle: 'Ask a question, share something or explore a topic.',
-  titleSize: 'xl',
-  subtitleSize: 'sm',
-  textGap: '4px',
-}
-
-export const INPUT = {
-  borderRadius: '32px',
-  padding: '8px 8px 8px 16px',
-  boxShadow: '0 4px 24px rgba(0,0,0,0.1)',
-  iconSize: 'lg',
-  iconWidth: 24,
-  buttonRadius: '24px',
-  buttonSize: 'lg',
-  placeholder: 'Talk to Swaddle',
-  sendLabel: 'Send',
-}
-
-export const BUBBLE = {
-  maxWidth: '70%',
-  padding: '12px 16px',
-  gap: '8px',
-  fontSize: 'sm',
-  radiusUser: '18px 18px 4px 18px',
-  radiusAi: '18px 18px 18px 4px',
-}
-
-export const API = {
-  baseUrl: import.meta.env.PROD
-    ? import.meta.env.VITE_API_URL_PROD
-    : import.meta.env.VITE_API_URL_DEV,
-  chatEndpoint: '/chat/',
-  healthEndpoint: '/health',
 }

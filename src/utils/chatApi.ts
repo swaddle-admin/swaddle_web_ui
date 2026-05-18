@@ -1,21 +1,96 @@
-import { API } from './constants'
-
 export type ChatResponse =
   | { type: 'token'; value: string }
   | { type: 'intent'; intent: string; message: string }
   | { type: 'done' }
   | { type: 'error'; message: string }
 
+type StreamChatCallbacks = {
+  onToken: (token: string) => void
+  onIntent: (intent: string, message: string) => void
+  onDone: () => void
+  onError: (message: string) => void
+}
+
+const getBaseUrl = () =>
+  import.meta.env.PROD
+    ? import.meta.env.VITE_API_URL_PROD
+    : import.meta.env.VITE_API_URL_DEV
+
+const parseSSELines = (chunk: string) =>
+  chunk
+    .split('\n')
+    .filter((line) => line.startsWith('data: '))
+    .map((line) => line.replace('data: ', '').trim())
+
+const cleanStreamToken = (token: string) =>
+  token
+    .replace(/\[meta\]\{.*?\}/g, '') // [meta]{...}
+    .replace(/\[\/?meta\]/g, '') // [meta] and [/meta]
+    .trim()
+
+const handleJsonResponse = async (
+  response: Response,
+  { onIntent, onDone }: Pick<StreamChatCallbacks, 'onIntent' | 'onDone'>
+) => {
+  const data = await response.json()
+  onIntent(data.intent, data.message)
+  onDone()
+}
+
+const handleStreamResponse = async (
+  response: Response,
+  { onToken, onDone }: Pick<StreamChatCallbacks, 'onToken' | 'onDone'>
+) => {
+  const reader = response.body?.getReader()
+  const decoder = new TextDecoder()
+
+  if (!reader) return
+
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms))
+
+  while (true) {
+    const { done, value } = await reader.read()
+
+    if (done) break
+
+    const chunk = decoder.decode(value, { stream: true })
+
+    for (const data of parseSSELines(chunk)) {
+      if (data === '[DONE]') {
+        onDone()
+        return
+      }
+
+      try {
+        const parsed = JSON.parse(data)
+
+        if (parsed.token) {
+          const token = cleanStreamToken(parsed.token)
+
+          if (!token) continue
+
+          for (const char of token) {
+            onToken(char)
+            await delay(5)
+          }
+        }
+      } catch {
+        // skip malformed lines
+      }
+    }
+  }
+}
+
 export const streamChat = async (
   prompt: string,
   userId: string,
-  onToken: (token: string) => void,
-  onIntent: (intent: string, message: string) => void,
-  onDone: () => void,
-  onError: (message: string) => void
+  callbacks: StreamChatCallbacks
 ) => {
+  const { onError, ...rest } = callbacks
+
   try {
-    const response = await fetch(`${API.baseUrl}${API.chatEndpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/chat/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -25,47 +100,13 @@ export const streamChat = async (
       }),
     })
 
-    const contentType = response.headers.get('content-type') || ''
+    const isJson = response.headers
+      .get('content-type')
+      ?.includes('application/json')
 
-    if (contentType.includes('application/json')) {
-      const data = await response.json()
-      onIntent(data.intent, data.message)
-      onDone()
-      return
-    }
-
-    const reader = response.body?.getReader()
-    const decoder = new TextDecoder()
-
-    if (!reader) return
-
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-
-      const chunk = decoder.decode(value)
-      const lines = chunk
-        .split('\n')
-        .filter((line) => line.startsWith('data: '))
-
-      for (const line of lines) {
-        const data = line.replace('data: ', '').trim()
-
-        if (data === '[DONE]') {
-          onDone()
-          return
-        }
-
-        try {
-          const parsed = JSON.parse(data)
-          if (parsed.token && !parsed.token.startsWith('[meta]')) {
-            onToken(parsed.token)
-          }
-        } catch {
-          // skip malformed lines
-        }
-      }
-    }
+    isJson
+      ? await handleJsonResponse(response, rest)
+      : await handleStreamResponse(response, rest)
   } catch (err) {
     onError(err instanceof Error ? err.message : 'Something went wrong')
   }
