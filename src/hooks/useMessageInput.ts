@@ -18,7 +18,7 @@ const useMessageInput = () => {
     role,
     content,
     contentType: 'text',
-    timestamp: new Date(),
+    timestamp: new Date().toISOString(),
   })
 
   const handleSend = async () => {
@@ -33,8 +33,9 @@ const useMessageInput = () => {
     dispatch(setLoading(true))
 
     let aiContent = ''
+    const userId = 97
 
-    await streamChat(userMessage.content, 'user_123', {
+    await streamChat(userMessage.content, userId, {
       onToken: (token) => {
         aiContent += token
         dispatch(updateMessage({ id: aiMessage.id, content: aiContent }))

@@ -38,7 +38,13 @@ const ErrorNotification = () => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
-          style={{ position: 'fixed', top: 80, left: 16, right: 16, zIndex: 1000 }}
+          style={{
+            position: 'fixed',
+            top: 80,
+            left: 16,
+            right: 16,
+            zIndex: 1000,
+          }}
         >
           <Alert
             color="red"
