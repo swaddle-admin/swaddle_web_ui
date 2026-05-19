@@ -24,9 +24,10 @@ const parseSSELines = (chunk: string) =>
 
 const cleanStreamToken = (token: string) =>
   token
-    .replace(/\[meta\]\{.*?\}/g, '') // [meta]{...}
-    .replace(/\[\/?meta\]/g, '') // [meta] and [/meta]
-    .trim()
+    .replace(/\[meta\][\s\S]*?\[\/meta\]/g, '')
+    .replace(/\\u([0-9a-fA-F]{4})/g, (_, hex) =>
+      String.fromCharCode(parseInt(hex, 16))
+    )
 
 const handleJsonResponse = async (
   response: Response,
@@ -84,13 +85,14 @@ const handleStreamResponse = async (
 
 export const streamChat = async (
   prompt: string,
-  userId: string,
+  userId: number,
   callbacks: StreamChatCallbacks
 ) => {
   const { onError, ...rest } = callbacks
 
   try {
-    const response = await fetch(`${getBaseUrl()}/chat/`, {
+    const url = `${getBaseUrl()}/chat/`
+    const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

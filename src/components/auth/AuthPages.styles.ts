@@ -33,6 +33,7 @@ export const pillStyle = {
 export const pillInnerInputStyle = {
   textIndent: '30px',
   color: 'white',
+  fontSize: '16px',
 
   '&::placeholder': {
     color: 'white',

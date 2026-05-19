@@ -8,7 +8,7 @@ const userMessage: Message = {
   role: 'user',
   content: 'Hello Swaddle',
   contentType: 'text',
-  timestamp: new Date(),
+  timestamp: new Date().toISOString(),
 }
 
 const aiMessage: Message = {
@@ -16,7 +16,7 @@ const aiMessage: Message = {
   role: 'assistant',
   content: 'Hi! How can I help?',
   contentType: 'text',
-  timestamp: new Date(),
+  timestamp: new Date().toISOString(),
 }
 
 describe('MessageBubble', () => {

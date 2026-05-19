@@ -18,7 +18,7 @@ const mockMessage: Message = {
   role: 'user',
   content: 'Hello Swaddle',
   contentType: 'text',
-  timestamp: new Date(),
+  timestamp: new Date().toISOString(),
 }
 
 describe('chatSlice', () => {

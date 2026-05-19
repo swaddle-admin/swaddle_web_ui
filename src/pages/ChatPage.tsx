@@ -4,6 +4,7 @@ import Navbar from '../components/layout/Navbar'
 import useAppSelector from '../hooks/useAppSelector'
 import MessageList from '../components/chat/MessageList'
 import MessageInput from '../components/chat/MessageInput'
+import ErrorNotification from '../components/chat/ErrorNotification'
 
 const ChatPage = () => {
   const isDarkMode = useAppSelector((state) => state.ui.isDarkMode)
@@ -14,6 +15,7 @@ const ChatPage = () => {
       transition={{ duration: 0.4, ease: 'easeInOut' }}
       style={containerStyle}
     >
+      <ErrorNotification />
       <Navbar />
       <Box style={{ flex: 1, overflow: 'hidden', padding: '0 16px' }}>
         <MessageList />
@@ -24,7 +26,7 @@ const ChatPage = () => {
 }
 
 const GRADIENTS = {
-  dark: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+  dark: 'linear-gradient(135deg, #04061a 0%, #1c2a6a 45%, #4c1d86 100%)',
   light: 'linear-gradient(135deg, #a8c0e8 0%, #9b8ec4 50%, #8b7bb8 100%)',
 }
 

@@ -16,8 +16,10 @@ const useAuth = () => {
     setError(null)
     try {
       await signInWithEmailAndPassword(auth, email, password)
+      return true
     } catch (err) {
       setError((err as AuthError).message)
+      return false
     } finally {
       setIsLoading(false)
     }
@@ -28,8 +30,10 @@ const useAuth = () => {
     setError(null)
     try {
       await createUserWithEmailAndPassword(auth, email, password)
+      return true
     } catch (err) {
       setError((err as AuthError).message)
+      return false
     } finally {
       setIsLoading(false)
     }
