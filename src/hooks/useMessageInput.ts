@@ -76,15 +76,12 @@ const useMessageInput = () => {
       },
       onDone: async () => {
         dispatch(setLoading(false))
-        // save the user prompt after the assistant response is finished
         saveUserPrompt()
-        // save assistant final message to history
         postChatHistory(userId, 'assistant', aiContent)
       },
       onError: (error) => {
         dispatch(setError(error))
         dispatch(setLoading(false))
-        // still save the user prompt even when the call fails
         saveUserPrompt()
       },
     },
