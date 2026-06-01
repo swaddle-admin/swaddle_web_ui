@@ -1,6 +1,9 @@
-import { Box, Text } from '@mantine/core'
+import { Box, Text, Button, Group } from '@mantine/core'
 import { motion } from 'framer-motion'
 import type { Message } from '../../types'
+import { createTask } from '../../utils/chatApi'
+import useAppDispatch from '../../hooks/useAppDispatch'
+import { setError } from '../../store/slices/chatSlice'
 
 interface MessageBubbleProps {
   message: Message
@@ -9,6 +12,7 @@ interface MessageBubbleProps {
 
 const MessageBubble = ({ message, isStreaming }: MessageBubbleProps) => {
   const isUser = message.role === 'user'
+  const dispatch = useAppDispatch()
   const content = stripMeta(message.content)
 
   if (!content) return null
@@ -16,21 +20,87 @@ const MessageBubble = ({ message, isStreaming }: MessageBubbleProps) => {
   return (
     <Box component={motion.div} {...bubbleAnimation} style={rowStyle(isUser)}>
       <Box style={isUser ? userBubbleStyle : aiBubbleStyle}>
-        <Text
-          size="sm"
-          c={isUser ? '#1a1a2e' : '#ffffff'}
-          style={{
-            lineHeight: 1.6,
-            textAlign: 'left',
-            wordWrap: 'break-word',
-            overflowWrap: 'break-word',
-          }}
-        >
-          {content}
-          {isStreaming && <motion.span {...cursorAnimation}>▋</motion.span>}
-        </Text>
+        {message.contentType === 'action_buttons' ? (
+          <ActionCard
+            json={content}
+            isStreaming={isStreaming}
+            dispatchErr={(m: string) => dispatch(setError(m))}
+          />
+        ) : (
+          <Text
+            size="sm"
+            c={isUser ? '#1a1a2e' : '#ffffff'}
+            style={{
+              lineHeight: 1.6,
+              textAlign: 'left',
+              wordWrap: 'break-word',
+              overflowWrap: 'break-word',
+            }}
+          >
+            {content}
+            {isStreaming && <motion.span {...cursorAnimation}>▋</motion.span>}
+          </Text>
+        )}
       </Box>
     </Box>
+  )
+}
+
+const ActionCard = ({
+  json,
+  isStreaming,
+  dispatchErr,
+}: {
+  json: string
+  isStreaming?: boolean
+  dispatchErr: (m: string) => void
+}) => {
+  let parsed: any = null
+  try {
+    parsed = JSON.parse(json)
+  } catch {
+    return (
+      <Text size="sm" c="#ffffff">
+        Invalid action payload
+      </Text>
+    )
+  }
+
+  const message = parsed?.response?.message ?? parsed?.message ?? ''
+
+  const handleAddTask = async () => {
+    try {
+      const payload = {
+        user_id: parsed?.user_id ?? 1,
+        title: parsed?.response?.title ?? parsed?.title ?? 'Task',
+        description: parsed?.response?.message ?? parsed?.message ?? '',
+        start_at: parsed?.response?.start_time ?? parsed?.start_time ?? null,
+        timezone:
+          parsed?.response?.timezone ??
+          Intl.DateTimeFormat().resolvedOptions().timeZone,
+        frequency:
+          parsed?.response?.task_frequency ?? parsed?.task_frequency ?? null,
+        children: parsed?.response?.child_refs ?? parsed?.child_refs ?? [],
+        location: parsed?.response?.location ?? parsed?.location ?? null,
+      }
+
+      await createTask(payload)
+      dispatchErr('Task added')
+    } catch (err) {
+      dispatchErr((err as Error).message)
+    }
+  }
+
+  return (
+    <div>
+      <Text size="sm" c="#ffffff" style={{ marginBottom: 8 }}>
+        {message}
+        {isStreaming && <motion.span {...cursorAnimation}>▋</motion.span>}
+      </Text>
+      <Group>
+        <Button onClick={handleAddTask}>Add to My Schedule!</Button>
+      </Group>
+    </div>
   )
 }
 
