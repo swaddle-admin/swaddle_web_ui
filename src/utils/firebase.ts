@@ -19,10 +19,6 @@ console.log('Vite env variables', {
 
   VITE_FIREBASE_APP_ID: import.meta.env.VITE_FIREBASE_APP_ID,
 
-  VITE_API_URL: import.meta.env.VITE_API_URL,
-
-  VITE_API_URL_DEV: import.meta.env.VITE_API_URL_DEV,
-
   VITE_API_URL_PROD: import.meta.env.VITE_API_URL_PROD,
 })
 
