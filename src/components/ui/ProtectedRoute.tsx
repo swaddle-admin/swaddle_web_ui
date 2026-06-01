@@ -9,9 +9,11 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [user, loading] = useAuthState(auth)
 
-  if (loading) return null
+  const currentUser = auth.currentUser
 
-  if (!user) return <Navigate to="/login" />
+  if (loading && currentUser === null) return <Navigate to="/login" replace />
+
+  if (!user) return <Navigate to="/login" replace />
 
   return <>{children}</>
 }
